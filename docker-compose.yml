@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  chat-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    command: npm run start:dev main
+    env_file: .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/db-chat
+      - JWT_SECRET=your_jwt_secret
+      - AMQP_URL=amqp://rabbitmq:5672
+    networks:
+      - chat-app-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672' # RabbitMQ Management UI
+    networks:
+      - chat-app-network
+
+  mongodb:
+    image: mongo:6.0
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - chat-app-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  chat-app-network:
+    driver: bridge
