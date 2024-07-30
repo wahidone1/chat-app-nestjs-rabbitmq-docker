@@ -29,12 +29,12 @@ import {
 
 @ApiTags('users')
 @ApiBearerAuth()
-@Controller('users')
+@Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
+  @Get('getProfile')
   @ApiOperation({ summary: 'Get user profile' })
   @ApiResponse({
     status: 200,
@@ -46,7 +46,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('profile')
+  @Put('updateProfile')
   @UseInterceptors(
     FileInterceptor('photo', {
       storage: diskStorage({

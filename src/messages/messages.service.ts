@@ -54,4 +54,18 @@ export class MessagesService {
       'Anda memiliki pesan baru',
     );
   }
+
+  // Hapus semua pesan berdasarkan username
+  async deleteAllMessagesByUser(username: string): Promise<void> {
+    await this.messageModel
+      .deleteMany({
+        $or: [{ sender: username }, { receiver: username }],
+      })
+      .exec();
+  }
+
+  // Hapus satu pesan berdasarkan ID
+  async deleteMessageById(messageId: string): Promise<void> {
+    await this.messageModel.findByIdAndDelete(messageId).exec();
+  }
 }
