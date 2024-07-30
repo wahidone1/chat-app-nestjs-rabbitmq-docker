@@ -71,7 +71,7 @@ Aplikasi chat ini dibangun menggunakan NestJS dengan arsitektur microservices. F
 1. Clone repositori:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/wahidone1/chat-app-nestjs-rabbitmq-docker.git
    cd chat-app
    ```
 
